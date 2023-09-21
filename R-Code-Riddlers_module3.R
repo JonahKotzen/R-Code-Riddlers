@@ -12,7 +12,8 @@ anole.tre <- read.tree("anole.tre")
 #Merge Data
 anole.log <- anole.dat %>%
   left_join(anole.eco) %>% 
-  print()
+  filter(!Ecomorph %in%c("U","CH")) %>%
+  na.omit()
 
 # Question 2: Linear Models
 lm.PH <- lm(log(HTotal) ~ log(PH), data = anole.log)
@@ -27,12 +28,14 @@ plot1 <- ggplot(anole.log, aes(x = log(PH), y = residuals_PH)) +
   labs(title = "Residuals vs. Perch Height",
        x = "Log Perch Height",
        y = "Residuals")
+plot1
 
-plot2 <- ggplot(anole.log, aes(x = log(PD), y = residuals_PD)) +
+plot2 <- ggplot(anole.log, aes(x = log(ArbPD), y = residuals_PD)) +
   geom_point() +
   labs(title = "Residuals vs. Perch Diameter",
        x = "Log Perch Diameter",
        y = "Residuals")
+plot2
 
 #Question 4: Phylogenetics
 pgls_PH <- pgls(log(HTotal) ~ log(PH), phy = anole.tre)

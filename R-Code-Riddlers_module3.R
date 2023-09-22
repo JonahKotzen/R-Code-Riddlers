@@ -16,22 +16,26 @@ anole.log <- anole.dat %>%
   filter(!Ecomorph %in%c("U","CH")) %>%
   na.omit()
 
+anole.log <- anole.log %>% 
+  mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
+
 # Question 2: Linear Models
-lm.PH <- lm(log(HTotal) ~ log(PH), data = anole.log)
-lm.PD <- lm(log(HTotal) ~ log(ArbPD), data = anole.log)
+lm.PH <- lm(HTotal ~ SVL+PH, data = anole.log)
+lm.PD <- lm(HTotal ~ SVL+ArbPD, data = anole.log)
+
 
 #Question 3: Residuals & Plots
 anole.log$residuals_PH <- resid(lm.PH)
 anole.log$residuals_PD <- resid(lm.PD)
 
-plot1 <- ggplot(anole.log, aes(x = log(PH), y = residuals_PH)) +
+plot1 <- ggplot(anole.log, aes(x = PH, y = residuals_PH)) +
   geom_point() +
   labs(title = "Residuals vs. Perch Height",
        x = "Log Perch Height",
        y = "Residuals")
 plot1
 
-plot2 <- ggplot(anole.log, aes(x = log(ArbPD), y = residuals_PD)) +
+plot2 <- ggplot(anole.log, aes(x = ArbPD, y = residuals_PD)) +
   geom_point() +
   labs(title = "Residuals vs. Perch Diameter",
        x = "Log Perch Diameter",
@@ -52,4 +56,5 @@ aic_PH_PD <- AICc(pgls_PH_PD)
 
 
 ggsave("custom_plot.png", width = 6, height = 4)
+
 

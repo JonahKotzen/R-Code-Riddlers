@@ -18,9 +18,7 @@ anole.tre <- read.tree("anole.tre")
 anole.log <- anole.dat %>%
   left_join(anole.eco) %>% 
   filter(!Ecomorph %in%c("U","CH")) %>%
-  na.omit()
-
-anole.log <- anole.log %>% 
+  na.omit()%>%
   mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
 
 # Question 2: Linear Models

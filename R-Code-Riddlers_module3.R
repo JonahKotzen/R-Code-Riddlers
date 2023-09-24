@@ -58,8 +58,13 @@ aicw(anole.phylo.aic$AICc)
 
 
 #Question 6: Plot & PGLS 
-
-
-ggsave("custom_plot.png", width = 6, height = 4)
-
-
+anole.log <- anole.log %>%
+  mutate(residulas_PH_PD=resid(pgls_PH_PD))
+  phylo.plot <- anole.log %>%
+  ggplot(aes(x = Ecomorph2, y = residulas_PH_PD)) +
+    geom_boxplot() +
+    labs(title = "Best Model Residuals Visualized with Other Factors",
+         x = "Ecomorphological Data",
+         y = "Residuals")
+  print(phylo.plot)
+  ggsave("custom_plot.png", width = 6, height = 4)

@@ -18,8 +18,9 @@ anole.tre <- read.tree("anole.tre")
 anole.log <- anole.dat %>%
   left_join(anole.eco) %>% 
   filter(!Ecomorph %in%c("U","CH")) %>%
-  na.omit()%>%
+  na.omit() %>%
   mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
+
 
 # Question 2: Linear Models
 lm.PH <- lm(HTotal ~ SVL+PH, data = anole.log)
@@ -44,14 +45,17 @@ plot2 <- ggplot(anole.log, aes(x = ArbPD, y = residuals_PD)) +
        y = "Residuals")
 plot2
 
+
 #Question 4: Phylogenetics
 pgls_PH <- gls(HTotal~SVL + PH, correlation = corBrownian(1,phy = anole.tre,form=~Species),data = anole.log, method = "ML")
 pgls_PD <- gls(HTotal~SVL + ArbPD, correlation = corBrownian(1,phy = anole.tre,form=~Species),data = anole.log, method = "ML")
 pgls_PH_PD <- gls(HTotal~SVL + PH+ArbPD, correlation = corBrownian(1,phy = anole.tre,form=~Species),data = anole.log, method = "ML")
 
+
 #Question 5: Model Assessment (AICc & AICw)
 anole.phylo.aic <- AICc(pgls_PH,pgls_PD,pgls_PH_PD)
 aicw(anole.phylo.aic$AICc)
+
 
 #Question 6: Plot & PGLS 
 

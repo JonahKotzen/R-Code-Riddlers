@@ -59,9 +59,10 @@ aicw(anole.phylo.aic$AICc)
 #but they are both correlated with hind-limb-length,
 #hence why the model that includes them both is better than either individually
 
+
 #Question 6: Plot & PGLS 
 anole.log <- anole.log %>%
-  mutate(residulas_PH_PD=resid(pgls_PH_PD))
+  mutate(residuals_PH_PD=resid(pgls_PH_PD))
 
 phylo.plot <- anole.log %>%
   ggplot(aes(x = Ecomorph2, y = residulas_PH_PD)) +

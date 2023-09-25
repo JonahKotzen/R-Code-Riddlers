@@ -74,4 +74,4 @@ phylo.plot <- anole.log %>%
        y = "Residuals")
   
 print(phylo.plot)
-ggsave("custom_plot.png", width = 6, height = 4)
+

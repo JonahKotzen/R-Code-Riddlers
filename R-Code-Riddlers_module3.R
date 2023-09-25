@@ -55,7 +55,7 @@ pgls_PH_PD <- gls(HTotal~SVL + PH+ArbPD, correlation = corBrownian(1,phy = anole
 #Question 5: Model Assessment (AICc & AICw)
 anole.phylo.aic <- AICc(pgls_PH,pgls_PD,pgls_PH_PD)
 aicw(anole.phylo.aic$AICc)
-#The results show that diameter is a better individual predictor than height 
+#The results show that diameter is a better individual predictor than height, 
 #but they are both correlated with hind-limb-length,
 #hence why the model that includes them both is better than either individually
 

@@ -55,9 +55,10 @@ pgls_PH_PD <- gls(HTotal~SVL + PH+ArbPD, correlation = corBrownian(1,phy = anole
 #Question 5: Model Assessment (AICc & AICw)
 anole.phylo.aic <- AICc(pgls_PH,pgls_PD,pgls_PH_PD)
 aicw(anole.phylo.aic$AICc)
+
 #The results show that diameter is a better individual predictor than height, 
 #but they are both correlated with hind-limb-length,
-#hence why the model that includes them both is better than either individually
+#hence why the model that includes them both is better than either individually.
 
 
 #Question 6: Plot & PGLS 
@@ -65,7 +66,7 @@ anole.log <- anole.log %>%
   mutate(residuals_PH_PD=resid(pgls_PH_PD))
 
 phylo.plot <- anole.log %>%
-  ggplot(aes(x = Ecomorph2, y = residulas_PH_PD)) +
+  ggplot(aes(x = Ecomorph2, y = residuals_PH_PD)) +
   geom_boxplot() +
   geom_point(stat = "summary", fun = "mean", shape = 20, size = 3, color = "red") +
   labs(title = "Best Model's Residuals Visualized with Other Factors",
